@@ -1,2 +1,2 @@
 # hrm_plugin
-This is a humar resources managing plugin for Redmine
+This is a human resources managing plugin for Redmine
