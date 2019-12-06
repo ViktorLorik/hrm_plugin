@@ -1,0 +1,10 @@
+# English strings go here for Rails i18n
+en:
+  work_schedule: "Work schedule"
+  working_hours: "Workhour/week"
+  allocated_working_hours: "Allocated workhour/week"
+  free_working_hours: "Free workhour/week"
+  deadline: "Deadline"
+  indefinite: "Indefinite"
+  level: "Level"
+  skills: "Skills"

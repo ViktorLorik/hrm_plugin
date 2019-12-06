@@ -1,0 +1,36 @@
+<%= form_for(@member, :url => membership_path(@member),
+             :as => :membership,
+             :remote => request.xhr?,
+             :method => :put) do |f| %>
+
+  <table>
+    <tbody>
+      <tr class="member">
+        <td>
+            <% @roles.each do |role| %>
+              <label class="block">
+                <%= check_box_tag('membership[role_ids][]',
+                                  role.id, @member.roles.to_a.include?(role),
+                                  :id => nil,
+                                  :disabled => !@member.role_editable?(role)) %> <%= role %>
+                <%= render_role_inheritance(@member, role) %>
+              </label>
+            <% end %>
+          <%= hidden_field_tag 'membership[role_ids][]', '', :id => nil %>
+        </td>
+        <td>
+        <%= number_field_tag(:working_hour, @member.working_hours) %>
+        </td>
+        <td>
+        <%= date_field_tag(:deadline, @member.deadline) %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    <%= submit_tag l(:button_save) %>
+    <%= link_to_function l(:button_cancel),
+                         "$('#member-#{@member.id}-roles').show(); $('#member-#{@member.id}-form').empty(); return false;" if request.xhr? %>
+  </p>
+<% end %>

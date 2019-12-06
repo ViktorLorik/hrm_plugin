@@ -1,0 +1,28 @@
+<h3>
+  <%= link_to l(:label_project_plural), projects_path(:user_id => 'me') %>
+</h3>
+<% projects = MyProjectsHelper.render_projects_block %>
+<% if projects.any? %>
+  <%= form_tag(my_page_path, :remote => true) do %>
+    <table class="list">
+      <thead>
+      <tr>
+        <th><%= l(:label_project) %></th>
+        <th><%= l(:working_hours) %></th>
+        <th><%= l(:deadline) %></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% projects.each do |project| %>
+        <tr>
+          <td><strong><%= project[:project] %></strong></td>
+          <td> <%= project[:working_hours] %> </td>
+          <td><%= project[:deadline] || l(:indefinite) %></td>
+        </tr>
+      <% end -%>
+  <% end -%>
+  </tbody>
+  </table>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>

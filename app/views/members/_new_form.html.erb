@@ -1,0 +1,61 @@
+<script>
+    function passParameters() {
+            var data = $("#new_membership").serializeArray();
+            $.ajax({
+                url: '<%= escape_javascript autocomplete_project_memberships_path(@project, :format => 'js') %>',
+                type: 'get',
+                data: {form_data: data},
+                success: function (data) {
+                    if (null) $('#' + null).html(data);
+                },
+                beforeSend: function () {
+                    $(this).addClass('ajax-loading');
+                },
+                complete: function () {
+                    $(this).removeClass('ajax-loading');
+                }
+            });
+    };
+
+</script>
+<fieldset class="box">
+  <legend><%= toggle_checkboxes_link('.level-selection input') %><%= l(:level) %></legend>
+  <div class="level-selection">
+    <% UserCustomField.find_by(name: "Level").possible_values.each_with_index do |level, i| %>
+      <label id="level-<%=i%>"><%= check_box_tag("levels-#{i}", 0, false, {:onclick=>"passParameters()"}) %><%= level %></label>
+    <% end %>
+  </div>
+</fieldset>
+<fieldset class="box">
+  <legend><%= toggle_checkboxes_link('.skills-selection input') %><%= l(:skills) %></legend>
+  <div class="skills-selection">
+    <% UserCustomField.find_by(name: "Skills").possible_values.each_with_index do |skill, i| %>
+      <label id="skill-<%=i%>"><%= check_box_tag("skill-#{i}", 0, false, {:onclick=>"passParameters()"}) %> <%= skill %></label>
+    <% end %>
+  </div>
+</fieldset>
+<fieldset class="box">
+  <legend><%= label_tag("principal_search", l(:label_principal_search)) %></legend>
+  <p><%= text_field_tag('principal_search', nil, {:onchange=>"passParameters()"}) %></p>
+  <%#= javascript_tag "observeSearchfield('principal_search', null, '#{ escape_javascript autocomplete_project_memberships_path(@project, :format => 'js') }')" %>
+  <div id="principals_for_new_member">
+    <%= render_principals_for_new_members(@project) %>
+  </div>
+</fieldset>
+<fieldset class="box">
+  <legend><%= toggle_checkboxes_link('.roles-selection input') %><%= l(:label_role_plural) %></legend>
+  <div class="roles-selection">
+    <% User.current.managed_roles(@project).each do |role| %>
+      <label><%= check_box_tag 'membership[role_ids][]', role.id, false, :id => nil %> <%= role %></label>
+    <% end %>
+  </div>
+</fieldset>
+<fieldset class="box">
+  <legend><%= l(:work_schedule) %></legend>
+  <div>
+    <label> <%= l(:working_hours) %></label>
+    <%= number_field_tag(:working_hours) %>
+    <label> <%= l(:deadline) %></label>
+    <%= date_field_tag(:deadline)%>
+  </div>
+</fieldset>

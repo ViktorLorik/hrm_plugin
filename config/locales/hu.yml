@@ -1,0 +1,9 @@
+hu:
+  work_schedule: "Munkarend"
+  working_hours: "Munkaóra/hét"
+  allocated_working_hours: "Lefoglalt munkaóra/hét"
+  free_working_hours: "Szabad munkaóra/hét"
+  deadline: "Határidő"
+  indefinite: "Határozatlan"
+  level: "Szint"
+  skills: "Képésségek"
